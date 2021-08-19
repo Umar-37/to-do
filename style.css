@@ -78,8 +78,8 @@ opacity: 0.7;
 .new-task-creator .btn.create{
     color:var(--clr-primary);
 }
-.btn.create{
 
+.btn.create{
     transition:transform  150ms;
 }
 .btn.create:hover{
