@@ -10,6 +10,12 @@ let lists=JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY))
 let selectedListId=localStorage.getItem
 (LOCAL_STORAGE_SELECTED_LIST_ID_KEY);// return null if not exisit or empty
 
+listsContainer.addEventListener('click',e=>{ //put listener to the container (ul) ,
+    if(e.target.tagName.toLowerCase()=='li'){ //any element in this container compair it and see if it's li elment
+        selectedListId=e.target.dataset.listId;
+        saveAndRrender();
+    }
+})
 newListForm.addEventListener(`submit`,e=>{
     e.preventDefault()
     const listName=newListInput.value;
@@ -39,6 +45,7 @@ function saveAndRrender(){
 
 function save(){
     localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
+    localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId)
 }
 
 function render(){
@@ -49,8 +56,9 @@ function render(){
         listElement.classList.add('list-name');
         listElement.innerText=list.name;
 
-        if(list.id===selectedListId) listElement.classList.add('active-list')
-
+        if(list.id===selectedListId) {
+        listElement.classList.add('active-list')
+        }
         listsContainer.appendChild(listElement);
     })
 }
