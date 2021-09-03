@@ -5,8 +5,15 @@ const newListInput=document.querySelector(`[data-new-list-input]`)
 const LOCAL_STORAGE_LIST_KEY='task.lists'
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY='task.selectedListId'
 
+const deleteListButton =document.querySelector(`[data-delete-list-button]`)
+//
+let ss=[1,2,3,4,"om"]
+let omar=ss.filter(e=>{
+    return e===e.toString();
+})
+//
 let lists=JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY))
-|| [];//get local storge if have,if not then create empty arry
+|| [];//get local storge if have,if not then create empty array
 let selectedListId=localStorage.getItem
 (LOCAL_STORAGE_SELECTED_LIST_ID_KEY);// return null if not exisit or empty
 
@@ -27,6 +34,17 @@ newListForm.addEventListener(`submit`,e=>{
     lists.push(list)
     saveAndRrender()
 })
+
+deleteListButton.addEventListener('click',e=>{// this myway to write the function
+   lists.forEach((e,index)=>{
+       if(e.id==selectedListId){
+           lists.splice(index,1) 
+       }
+   })
+   selectedListId=null
+    saveAndRrender()
+}
+)
 
 function createList(name){
     // this.name={
