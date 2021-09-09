@@ -98,7 +98,7 @@ function renderTasks(selectedList){
         checkbox.checked=task.complete 
         const label =taskElement.querySelector('label')
         label.htmlFor=task.Id
-        label.append(task.name)//apend text after the last child of the Element
+        label.append(task.name)//apend textg after the last child of the Element
         tasksContainer.appendChild(taskElement)
     })
 }
@@ -107,10 +107,8 @@ function renderTaskCount(selectedList){
     const incompleteTasksCount = selectedList.tasks.filter(task=> {
         return task.complete==false }
         ).length //convert to number 
-    console.log(incompleteTasksCount)
-    //
     const taskString=incompleteTasksCount === 1 ? "task" : "tasks"
-    listCountElement.innerText=`${incompleteTasksCount} ${taskString}`
+    listCountElement.innerText=`${incompleteTasksCount} ${taskString}  remaining`
 }
 function renderLists(){
     lists.forEach(list =>{
@@ -119,7 +117,7 @@ function renderLists(){
         listElement.classList.add('list-name');
         listElement.innerText=list.name;
 
-        if(list.id===selectedList.Id) {
+        if(list.id===selectedList.Id){
         listElement.classList.add('active-list')
         }
         listsContainer.appendChild(listElement);
