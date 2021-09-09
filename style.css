@@ -38,6 +38,7 @@ body{
     grid-area:list;
 }
 .todo-list{                             
+    position: relative;/* so it become relative to class="delete-stuff" */
     --spacer:2rem;
     grid-area: active;
     background: var(--clr-light);
