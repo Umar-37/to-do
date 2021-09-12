@@ -13,12 +13,17 @@ const listCountElement =document.querySelector(`[data-list-count]`)
 const tasksContainer   =document.querySelector(`[data-tasks]`)
 const taskTemplate =document.getElementById('task-template') //for adding tasks
 
+const newTaskForm =document.querySelector('[data-new-task-form]')
+const newTaskInput =document.querySelector('[data-new-task-input]')
+
 let lists=JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY))
 || [];//get local storge if have,if not then create empty array
+    
 let selectedList={
     Id:localStorage.getItem
 (LOCAL_STORAGE_SELECTED_LIST_ID_KEY),// return null if not exisit or empty
-    name:''}
+    name:'',
+    tasks:[]}
 
 listsContainer.addEventListener('click',e=>{ //put listener to the container (ul) ,
     if(e.target.tagName.toLowerCase() == 'li'){ //any element in this container compair it and see if it's li elment
@@ -27,20 +32,30 @@ listsContainer.addEventListener('click',e=>{ //put listener to the container (ul
         saveAndRrender();
     }
 })
-newListForm.addEventListener(`submit`,e=>{
-    e.preventDefault()
-    const listName=newListInput.value;
-
-    if(listName==null || listName==="")return
+newListForm.addEventListener(`submit`,e=>{ //use this code again in 
+    e.preventDefault()                     //any project
+    const listName=newListInput.value;      //it check whether you submit valid input and not empty string
+    if(listName==null || listName==="")return //and not empty string
 
     const list=createList(listName)
-    selectedList.tasks=list.tasks
-    console.table(selectedList)
-    newListInput.value=null
+    //selectedList.tasks=list.tasks
+    newListInput.value=null//clear the input field
     lists.push(list)
     saveAndRrender()
 })
 
+newTaskForm.addEventListener(`submit`,e=>{ //use this code again in 
+    e.preventDefault()                     //any project
+    const taskName=newTaskInput.value;      //it check whether you submit valid input and not empty string
+    if(taskName==null || taskName=="")return //and not empty string
+
+    const task=createTask(taskName)//omar please check whether this done in the else or not
+    newTaskInput.value=null //clear the input field
+    //lists[1].tasks.push(task)
+    //selectedList.tasks=lists.find(list=>list.id===selectedList.Id)
+    let omar=lists.find(e=> selectedList.Id==e.id)
+    saveAndRrender()
+})
 deleteListButton.addEventListener('click',e=>{// this myway to write the function
    lists.forEach((e,index)=>{
        if(e.id==selectedList.Id){
@@ -63,6 +78,10 @@ function createList(name){
                 name:'dfdkfdkfjdkf',
                 complete:true
             }]}
+
+}
+function createTask(name){
+    return {id:Date.now().toString(),name:name, complete:false }
 
 }
 
