@@ -32,7 +32,7 @@
           placeholder="new list name"
           aria-label="new list name"
         />
-        <button class="btn create" aria-label="create new list">+</button>
+        <button id="btn-omar"class="btn create" aria-label="create new list">+</button>
       </form>
     </div>
 
@@ -72,14 +72,15 @@
         </div>
 
         <div class="new-task-creator">
-            <form action="">
+            <form action="" data-new-task-form>
                 <input 
+                  data-new-task-input
                   type="text"
                   class="new task"
                   placeholder="new task name"
                   aria-label="new task name"
                 />
-                <button class="btn create" aria-label="create new task">+</button>
+                <button  class="btn create" aria-label="create new task">+</button>
               </form>
         </div>
       </div>
