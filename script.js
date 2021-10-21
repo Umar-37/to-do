@@ -1,3 +1,5 @@
+let log=console.log //ease of use console.log()
+
 const listsContainer=document.querySelector('[data-lists]')
 const newListForm=document.querySelector(`[data-new-list-form]`)
 const newListInput=document.querySelector(`[data-new-list-input]`)
@@ -23,12 +25,14 @@ let selectedList={
     Id:localStorage.getItem
 (LOCAL_STORAGE_SELECTED_LIST_ID_KEY),// return null if not exisit or empty
     name:'',
-    tasks:[]}
-
+    tasks:[]
+}
 listsContainer.addEventListener('click',e=>{ //put listener to the container (ul) ,
     if(e.target.tagName.toLowerCase() == 'li'){ //any element in this container compair it and see if it's li elment
         selectedList.Id=e.target.dataset.listId;
         selectedList.name=e.target.innerText;
+        selectedList.tasks=lists[theSelected(lists,selectedList.Id)].tasks
+        log(selectedList)
         saveAndRrender();
     }
 })
@@ -50,10 +54,11 @@ newTaskForm.addEventListener(`submit`,e=>{ //use this code again in
     if(taskName==null || taskName=="")return //and not empty string
 
     const task=createTask(taskName)//omar please check whether this done in the else or not
+    let theIndex=theSelected(lists,selectedList.Id)
+    lists[theIndex].tasks.push(task)
+    selectedList.tasks=lists[theIndex].tasks
     newTaskInput.value=null //clear the input field
-    //lists[1].tasks.push(task)
-    //selectedList.tasks=lists.find(list=>list.id===selectedList.Id)
-    let omar=lists.find(e=> selectedList.Id==e.id)
+
     saveAndRrender()
 })
 deleteListButton.addEventListener('click',e=>{// this myway to write the function
@@ -109,11 +114,18 @@ function render(){
     }
 }
 //------------------------ Funtion area ---------------
+function theSelected(lists,theIndex){//return index of the element we selected
+        return lists.findIndex(e=> e.id==theIndex)
+        }
+
 function renderTasks(selectedList){
+    console.table(selectedList)
     selectedList.tasks.forEach(task=>{
         const taskElement =document.importNode(taskTemplate.content,true)// true very important to import all template content not just the first tag
         const checkbox =taskElement.querySelector('input')
         checkbox.id=task.Id
+        log(task.Id)
+        log(task.name)
         checkbox.checked=task.complete 
         const label =taskElement.querySelector('label')
         label.htmlFor=task.Id
