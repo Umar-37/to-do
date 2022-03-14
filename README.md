@@ -1,2 +1,2 @@
 # to-do
-Simple too do list using vanilla javascript
+Simple to do list using vanilla javascript
